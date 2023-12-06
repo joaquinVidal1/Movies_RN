@@ -8,7 +8,7 @@ type SearchParamsList = {
 
 const SearchNavigator = createNativeStackNavigator<SearchParamsList>();
 
-const MoviesFlow = () => {
+const MoviesFlow: React.FC = () => {
   return (
     <SearchNavigator.Navigator>
       <SearchNavigator.Screen name="Search" component={SearchScreen} />

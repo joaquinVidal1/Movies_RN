@@ -18,7 +18,7 @@ type AppTabsParamList = {
 
 const AppNavigator = createBottomTabNavigator<AppTabsParamList>();
 
-const AppTabsFlow = () => {
+const AppTabsFlow: React.FC = () => {
   return (
     <AppNavigator.Navigator
       screenOptions={{

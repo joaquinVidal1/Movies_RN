@@ -8,7 +8,7 @@ type ListStackParamsList = {
 
 const ListNavigator = createNativeStackNavigator<ListStackParamsList>();
 
-const ListFlow = () => {
+const ListFlow: React.FC = () => {
   return (
     <ListNavigator.Navigator>
       <ListNavigator.Screen name="List" component={ListScreen} />

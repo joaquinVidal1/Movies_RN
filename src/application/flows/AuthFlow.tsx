@@ -8,7 +8,7 @@ type AuthParamList = {
 
 const AuthNavigator = createNativeStackNavigator<AuthParamList>();
 
-const AuthFlow = () => {
+const AuthFlow: React.FC = () => {
   return (
     <AuthNavigator.Navigator>
       <AuthNavigator.Screen name="LogIn" component={LogInScreen} />
