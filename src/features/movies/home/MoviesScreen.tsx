@@ -1,11 +1,17 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const MoviesScreen = () => {
+  const {colors} = useTheme();
+
   return (
-    <View>
-      <Text>Movies Screen</Text>
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text style={{color: colors.text}}>Movies Screen</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 

@@ -12,6 +12,7 @@ const MoviesTheme = {
     ...DarkTheme.colors,
     primary: colors.primaryColor,
     background: colors.backgroundColor,
+    text: colors.primaryColor,
   },
 };
 
