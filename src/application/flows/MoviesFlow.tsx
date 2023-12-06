@@ -8,17 +8,17 @@ type MoviesParamList = {
   MovieDetails: undefined;
 };
 
-const AuthNavigator = createNativeStackNavigator<MoviesParamList>();
+const MoviesNavigator = createNativeStackNavigator<MoviesParamList>();
 
 const MoviesFlow = () => {
   return (
-    <AuthNavigator.Navigator>
-      <AuthNavigator.Screen name="Home" component={MoviesScreen} />
-      <AuthNavigator.Screen
+    <MoviesNavigator.Navigator>
+      <MoviesNavigator.Screen name="Home" component={MoviesScreen} />
+      <MoviesNavigator.Screen
         name="MovieDetails"
         component={MovieDetailsScreen}
       />
-    </AuthNavigator.Navigator>
+    </MoviesNavigator.Navigator>
   );
 };
 
