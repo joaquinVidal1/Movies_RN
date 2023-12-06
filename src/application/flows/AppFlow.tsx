@@ -1,8 +1,8 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeIcon from '../../../res/Home.svg';
-import MyListIcon from '../../../res/MyList.svg';
-import ProfileIcon from '../../../res/Profile.svg';
-import SearchIcon from '../../../res/Search.svg';
+import HomeIcon from '../../../res/Home';
+import MyListIcon from '../../../res/MyList';
+import ProfileIcon from '../../../res/Profile';
+import SearchIcon from '../../../res/Search';
 import {colors} from '../../features/shared/color';
 import ListFlow from './ListFlow';
 import MoviesFlow from './MoviesFlow';
@@ -33,11 +33,7 @@ const AppTabsFlow = () => {
       <AppNavigator.Screen
         name="HomeFlow"
         component={MoviesFlow}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <HomeIcon fill={focused ? 'red' : 'blue'} />
-          ),
-        }}
+        options={{tabBarIcon: HomeIcon}}
       />
       <AppNavigator.Screen
         name="SearchFlow"
