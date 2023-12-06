@@ -4,7 +4,7 @@ import MovieDetailsScreen from '../../features/movies/detail/MovieDetailsScreen'
 import MoviesScreen from '../../features/movies/home/MoviesScreen';
 
 type MoviesParamList = {
-  Home: undefined;
+  MoviesHome: undefined;
   MovieDetails: undefined;
 };
 
@@ -12,8 +12,8 @@ const MoviesNavigator = createNativeStackNavigator<MoviesParamList>();
 
 const MoviesFlow = () => {
   return (
-    <MoviesNavigator.Navigator>
-      <MoviesNavigator.Screen name="Home" component={MoviesScreen} />
+    <MoviesNavigator.Navigator screenOptions={{headerShown: false}}>
+      <MoviesNavigator.Screen name="MoviesHome" component={MoviesScreen} />
       <MoviesNavigator.Screen
         name="MovieDetails"
         component={MovieDetailsScreen}
