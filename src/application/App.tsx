@@ -2,8 +2,8 @@ import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import QueryProvider from '../features/infraestructure/query/QueryProvideer';
 import {colors} from '../features/shared/color';
+import QueryProvider from '../infraestructure/query/QueryProvideer';
 import AppTabsFlow from './flows/AppFlow';
 import AuthFlow from './flows/AuthFlow';
 

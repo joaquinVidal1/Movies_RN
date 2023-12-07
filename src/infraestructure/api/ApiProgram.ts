@@ -15,3 +15,10 @@ export interface ApiProgram {
   vote_average: number;
   vote_count: number;
 }
+
+export interface ApiPaginatedResponse<T> {
+  page: number;
+  results: T;
+  total_pages: number;
+  total_results: number;
+}

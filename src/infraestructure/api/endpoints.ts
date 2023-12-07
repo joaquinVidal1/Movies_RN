@@ -1,7 +1,7 @@
-import {ApiProgram} from './ApiProgram';
+import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
 
-export const getPrograms = (): Promise<ApiProgram[]> => {
+export const getPrograms = (): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
   return instance
     .get('/trending/all/day')
     .then(response => {
