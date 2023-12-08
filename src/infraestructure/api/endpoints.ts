@@ -2,11 +2,11 @@ import {AxiosResponse} from 'axios';
 import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
 
-export const getTrendingPrograms = (): Promise<
-  ApiPaginatedResponse<ApiProgram[]>
-> => {
+const fetchProgramsFromApi = (
+  uri: string,
+): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
   return instance
-    .get('/trending/all/day')
+    .get(uri)
     .then(response => {
       if (response.status === 200) {
         return response.data;
@@ -18,6 +18,24 @@ export const getTrendingPrograms = (): Promise<
       console.log(error);
       throw error;
     });
+};
+
+export const getTrendingPrograms = (): Promise<
+  ApiPaginatedResponse<ApiProgram[]>
+> => {
+  return fetchProgramsFromApi('/trending/all/day');
+};
+
+export const getUpcomingMovies = (): Promise<
+  ApiPaginatedResponse<ApiProgram[]>
+> => {
+  return fetchProgramsFromApi('/movie/upcoming?language=en-US&page=1');
+};
+
+export const getTopRatedMovies = (): Promise<
+  ApiPaginatedResponse<ApiProgram[]>
+> => {
+  return fetchProgramsFromApi('movie/top_rated?language=en-US&page=1');
 };
 
 export const getMyList = async (): Promise<ApiProgram[]> => {

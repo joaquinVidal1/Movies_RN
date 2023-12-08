@@ -1,12 +1,19 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useMyList, useTrendingPrograms} from '../../queries';
+import {
+  useMyList,
+  useTopRatedMovies,
+  useTrendingPrograms,
+  useUpcomingMovies,
+} from '../../queries';
 import ProgramsList from './components/ProgramsList';
 
 const MoviesScreen = () => {
-  const programs = useTrendingPrograms();
+  const trending = useTrendingPrograms();
   const myList = useMyList();
+  const upComing = useUpcomingMovies();
+  const topRatedMovies = useTopRatedMovies();
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -18,18 +25,18 @@ const MoviesScreen = () => {
             style={styles.list}
           />
           <ProgramsList
-            programs={programs.data}
+            programs={trending.data}
             title="Trending Now"
             style={styles.list}
           />
           <ProgramsList
-            programs={programs.data}
-            title="Recently Added"
+            programs={upComing.data}
+            title="Upcoming"
             style={styles.list}
           />
           <ProgramsList
-            programs={programs.data}
-            title="TV Series"
+            programs={topRatedMovies.data}
+            title="Top Rated"
             style={styles.list}
           />
         </ScrollView>
