@@ -1,11 +1,11 @@
 import React from 'react';
 import {FlatList, StyleProp, StyleSheet, Text, View} from 'react-native';
-import {ApiProgram} from '../../../../infraestructure/api/ApiProgram';
+import Program from '../../../../model/Program';
 import {colors} from '../../../shared/color';
 import ProgramCover from './ProgramCover';
 
 export type Props = {
-  programs: ApiProgram[];
+  programs: Program[];
   title: string;
   style: StyleProp<any>;
   onEndReached?: any;

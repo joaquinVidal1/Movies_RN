@@ -9,6 +9,7 @@ import {
   ApiProgram,
 } from './../infraestructure/api/ApiProgram';
 import {getUpcomingMovies} from './../infraestructure/api/endpoints';
+import {fromApiToModel} from './../model/Program';
 
 const programsKeys = {
   all: ['programs'],
@@ -25,17 +26,6 @@ const upcomingKeys = {
 const topRatedKeys = {
   all: ['topRated'],
 };
-
-const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w200';
-
-const addBaseUrlToPrograms = (programs: ApiProgram[]) =>
-  programs.map(program => {
-    return {
-      ...program,
-      poster_path: BASE_IMAGE_URL + program.poster_path,
-      backdrop_path: BASE_IMAGE_URL + program.backdrop_path,
-    };
-  });
 
 const baseInfiteQuery = (
   queryKeys: string[],
@@ -62,7 +52,7 @@ const baseInfiteQuery = (
         pages: data.pages.map(page => {
           return {
             ...page,
-            results: addBaseUrlToPrograms(page.results),
+            results: page.results.map(apiProgram => fromApiToModel(apiProgram)),
           };
         }),
       };
@@ -80,7 +70,7 @@ export const useMyList = () => {
   return useQuery({
     queryKey: myListKeys.all,
     queryFn: getMyList,
-    select: data => addBaseUrlToPrograms(data),
+    select: data => data.map(apiProgram => fromApiToModel(apiProgram)),
   });
 };
 
@@ -88,7 +78,7 @@ export const useTrendingPrograms = () => {
   return useQuery({
     queryKey: programsKeys.all,
     queryFn: getTrendingPrograms,
-    select: data => addBaseUrlToPrograms(data.results),
+    select: data => data.results.map(apiProgram => fromApiToModel(apiProgram)),
   });
 };
 
