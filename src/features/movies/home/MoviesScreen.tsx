@@ -12,7 +12,7 @@ import ProgramsList from './components/ProgramsList';
 const MoviesScreen = () => {
   const trending = useTrendingPrograms();
   const myList = useMyList();
-  const upComing = useUpcomingMovies();
+  const {data: upComingMovies, fetchNextPage} = useUpcomingMovies();
   const topRatedMovies = useTopRatedMovies();
 
   return (
@@ -30,9 +30,10 @@ const MoviesScreen = () => {
             style={styles.list}
           />
           <ProgramsList
-            programs={upComing.data}
+            programs={upComingMovies?.pages.flatMap(page => page.results)}
             title="Upcoming"
             style={styles.list}
+            onEndReached={fetchNextPage}
           />
           <ProgramsList
             programs={topRatedMovies.data}

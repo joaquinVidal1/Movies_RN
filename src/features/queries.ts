@@ -1,11 +1,11 @@
-import {useQuery} from '@tanstack/react-query';
+import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
 import {
   getMyList,
   getTopRatedMovies,
-  getUpcomingMovies,
+  getTrendingPrograms,
 } from '../infraestructure/api/endpoints';
 import {ApiProgram} from './../infraestructure/api/ApiProgram';
-import {getTrendingPrograms} from './../infraestructure/api/endpoints';
+import {getUpcomingMovies} from './../infraestructure/api/endpoints';
 
 const programsKeys = {
   all: ['programs'],
@@ -34,11 +34,34 @@ const addBaseUrlToPrograms = (programs: ApiProgram[]) =>
     };
   });
 
-export const useTrendingPrograms = () => {
-  return useQuery({
-    queryKey: programsKeys.all,
-    queryFn: getTrendingPrograms,
-    select: data => addBaseUrlToPrograms(data.results),
+export const useUpcomingMovies = () => {
+  return useInfiniteQuery({
+    queryKey: upcomingKeys.all,
+    queryFn: ({pageParam}: {pageParam: number}) => {
+      return getUpcomingMovies(pageParam);
+    },
+    getNextPageParam: lastPage => {
+      const nextPage = lastPage.page + 1;
+      if (nextPage > lastPage.total_pages) return undefined;
+      else return nextPage;
+    },
+    getPreviousPageParam: firstPage => {
+      const prevPage = firstPage.page - 1;
+      if (prevPage <= 0) return undefined;
+      else return prevPage;
+    },
+    select: data => {
+      return {
+        ...data,
+        pages: data.pages.map(page => {
+          return {
+            ...page,
+            results: addBaseUrlToPrograms(page.results),
+          };
+        }),
+      };
+    },
+    initialPageParam: 1,
   });
 };
 
@@ -50,10 +73,10 @@ export const useMyList = () => {
   });
 };
 
-export const useUpcomingMovies = () => {
+export const useTrendingPrograms = () => {
   return useQuery({
-    queryKey: upcomingKeys.all,
-    queryFn: getUpcomingMovies,
+    queryKey: programsKeys.all,
+    queryFn: getTrendingPrograms,
     select: data => addBaseUrlToPrograms(data.results),
   });
 };

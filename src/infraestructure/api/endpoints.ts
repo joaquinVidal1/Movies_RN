@@ -26,10 +26,10 @@ export const getTrendingPrograms = (): Promise<
   return fetchProgramsFromApi('/trending/all/day');
 };
 
-export const getUpcomingMovies = (): Promise<
-  ApiPaginatedResponse<ApiProgram[]>
-> => {
-  return fetchProgramsFromApi('/movie/upcoming?language=en-US&page=1');
+export const getUpcomingMovies = (
+  page: number,
+): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
+  return fetchProgramsFromApi(`/movie/upcoming?language=en-US&page=${page}`);
 };
 
 export const getTopRatedMovies = (): Promise<

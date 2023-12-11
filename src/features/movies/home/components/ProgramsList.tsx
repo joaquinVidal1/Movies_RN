@@ -8,8 +8,14 @@ export type Props = {
   programs: ApiProgram[];
   title: string;
   style: ViewStyle;
+  onEndReached: any | undefined;
 };
-const ProgramsList: React.FC<Props> = ({programs, title, style}) => {
+const ProgramsList: React.FC<Props> = ({
+  programs,
+  title,
+  style,
+  onEndReached,
+}) => {
   return (
     <View style={[style, styles.container]}>
       <Text style={styles.title}>{title}</Text>
@@ -18,6 +24,7 @@ const ProgramsList: React.FC<Props> = ({programs, title, style}) => {
         data={programs}
         keyExtractor={program => program.id.toLocaleString()}
         renderItem={program => <ProgramCover program={program.item} />}
+        onEndReached={onEndReached}
       />
     </View>
   );
