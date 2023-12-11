@@ -1,10 +1,10 @@
 import React from 'react';
 import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
-import {ApiProgram} from '../../../../infraestructure/api/ApiProgram';
 import {tokenValue} from '../../../../infraestructure/api/instance';
+import Program from '../../../../model/Program';
 
 export type Props = {
-  program: ApiProgram;
+  program: Program;
 };
 
 const ProgramCover: React.FC<Props> = ({program}) => {
@@ -15,7 +15,7 @@ const ProgramCover: React.FC<Props> = ({program}) => {
     <View style={styles.container}>
       <Image
         source={{
-          uri: program.poster_path,
+          uri: program.posterPath,
           headers: {
             Authorization: `Bearer ${tokenValue}`,
           },

@@ -30,7 +30,7 @@ const MoviesScreen = () => {
         <ProgramsList
           programs={myList.data}
           title="My List"
-          style={[styles.list, {marginTop: 83}]}
+          style={{...styles.list, marginTop: 83}}
         />
         <ProgramsList
           programs={trendingPrograms}
@@ -46,7 +46,7 @@ const MoviesScreen = () => {
         <ProgramsList
           programs={topRatedMovies}
           title="Top Rated"
-          style={[styles.list, {marginBottom: 65}]}
+          style={{...styles.list, marginBottom: 65}}
           onEndReached={fetchMoreTopRatedMovies}
         />
       </ScrollView>

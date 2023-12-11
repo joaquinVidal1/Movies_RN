@@ -17,13 +17,18 @@ const ProgramsList: React.FC<Props> = ({
   onEndReached,
 }) => {
   return (
-    <View style={[style, styles.container]}>
-      <Text style={styles.title}>{title}</Text>
+    <View style={[styles.container, {...style, marginStart: 0}]}>
+      <Text style={[styles.title, {marginStart: style.marginStart}]}>
+        {title}
+      </Text>
       <FlatList
+        contentContainerStyle={{
+          marginStart: style.marginStart,
+        }}
         horizontal
         data={programs}
         keyExtractor={(program, index) =>
-          program.id.toLocaleString() + index.toString()
+          program.id.toString() + index.toString()
         }
         renderItem={program => <ProgramCover program={program.item} />}
         onEndReached={onEndReached}
