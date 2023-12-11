@@ -12,8 +12,10 @@ import ProgramsList from './components/ProgramsList';
 const MoviesScreen = () => {
   const trending = useTrendingPrograms();
   const myList = useMyList();
-  const {data: upComingMovies, fetchNextPage} = useUpcomingMovies();
-  const topRatedMovies = useTopRatedMovies();
+  const {data: upComingMovies, fetchNextPage: fetchMoreUpcomingMovies} =
+    useUpcomingMovies();
+  const {data: topRatedMovies, fetchNextPage: fetchMoreTopRatedMovies} =
+    useTopRatedMovies();
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -30,15 +32,16 @@ const MoviesScreen = () => {
             style={styles.list}
           />
           <ProgramsList
-            programs={upComingMovies?.pages.flatMap(page => page.results)}
+            programs={upComingMovies}
             title="Upcoming"
             style={styles.list}
-            onEndReached={fetchNextPage}
+            onEndReached={fetchMoreUpcomingMovies}
           />
           <ProgramsList
-            programs={topRatedMovies.data}
+            programs={topRatedMovies}
             title="Top Rated"
-            style={styles.list}
+            style={[styles.list, {marginBottom: 65}]}
+            onEndReached={fetchMoreTopRatedMovies}
           />
         </ScrollView>
       </SafeAreaView>

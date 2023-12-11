@@ -4,7 +4,10 @@ import {
   getTopRatedMovies,
   getTrendingPrograms,
 } from '../infraestructure/api/endpoints';
-import {ApiProgram} from './../infraestructure/api/ApiProgram';
+import {
+  ApiPaginatedResponse,
+  ApiProgram,
+} from './../infraestructure/api/ApiProgram';
 import {getUpcomingMovies} from './../infraestructure/api/endpoints';
 
 const programsKeys = {
@@ -23,7 +26,7 @@ const topRatedKeys = {
   all: ['topRated'],
 };
 
-const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w200';
 
 const addBaseUrlToPrograms = (programs: ApiProgram[]) =>
   programs.map(program => {
@@ -34,11 +37,14 @@ const addBaseUrlToPrograms = (programs: ApiProgram[]) =>
     };
   });
 
-export const useUpcomingMovies = () => {
-  return useInfiniteQuery({
-    queryKey: upcomingKeys.all,
+const baseInfiteQuery = (
+  queryKeys: string[],
+  queryFn: (page: number) => Promise<ApiPaginatedResponse<ApiProgram[]>>,
+) => {
+  const res = useInfiniteQuery({
+    queryKey: queryKeys,
     queryFn: ({pageParam}: {pageParam: number}) => {
-      return getUpcomingMovies(pageParam);
+      return queryFn(pageParam);
     },
     getNextPageParam: lastPage => {
       const nextPage = lastPage.page + 1;
@@ -63,6 +69,11 @@ export const useUpcomingMovies = () => {
     },
     initialPageParam: 1,
   });
+  return {...res, data: res.data?.pages?.flatMap(page => page.results)};
+};
+
+export const useUpcomingMovies = () => {
+  return baseInfiteQuery(upcomingKeys.all, getUpcomingMovies);
 };
 
 export const useMyList = () => {
@@ -82,9 +93,5 @@ export const useTrendingPrograms = () => {
 };
 
 export const useTopRatedMovies = () => {
-  return useQuery({
-    queryKey: topRatedKeys.all,
-    queryFn: getTopRatedMovies,
-    select: data => addBaseUrlToPrograms(data.results),
-  });
+  return baseInfiteQuery(topRatedKeys.all, getTopRatedMovies);
 };

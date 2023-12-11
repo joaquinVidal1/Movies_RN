@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {FlatList, StyleProp, StyleSheet, Text, View} from 'react-native';
 import {ApiProgram} from '../../../../infraestructure/api/ApiProgram';
 import {colors} from '../../../shared/color';
 import ProgramCover from './ProgramCover';
@@ -7,8 +7,8 @@ import ProgramCover from './ProgramCover';
 export type Props = {
   programs: ApiProgram[];
   title: string;
-  style: ViewStyle;
-  onEndReached: any | undefined;
+  style: StyleProp<any>;
+  onEndReached?: any;
 };
 const ProgramsList: React.FC<Props> = ({
   programs,
@@ -22,9 +22,12 @@ const ProgramsList: React.FC<Props> = ({
       <FlatList
         horizontal
         data={programs}
-        keyExtractor={program => program.id.toLocaleString()}
+        keyExtractor={(program, index) =>
+          program.id.toLocaleString() + index.toString()
+        }
         renderItem={program => <ProgramCover program={program.item} />}
         onEndReached={onEndReached}
+        onEndReachedThreshold={0.7}
       />
     </View>
   );
