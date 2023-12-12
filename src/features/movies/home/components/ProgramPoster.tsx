@@ -4,6 +4,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import InfoIcon from '../../../../../res/InfoIcon.svg';
 import TitleLogo from '../../../../../res/MovyTitle.svg';
+import DotIcon from '../../../../../res/Oval.svg';
 import PlayIcon from '../../../../../res/PlayIcon.svg';
 import PlusIcon from '../../../../../res/PlusIcon.svg';
 import Program from '../../../../model/Program';
@@ -20,9 +21,6 @@ const ProgramPoster: React.FC<Props> = ({program}) => {
       genres?.data?.find(genre => genre.id === genreId),
     ) ?? [];
 
-  console.log(genresToDisplay);
-  console.log('genre: ', genres);
-
   return (
     <View style={styles.container}>
       <Image
@@ -37,19 +35,23 @@ const ProgramPoster: React.FC<Props> = ({program}) => {
           width: '100%',
           aspectRatio: 2 / 3,
           position: 'absolute',
+          top: 100,
         }}
-        colors={['transparent', 'black']}
+        colors={['transparent', 'black', 'black']}
         start={[1, 0.5]}
         end={[1, 1]}
       />
       <TitleLogo style={styles.title} />
       <View style={styles.genreContainer}>
         {genresToDisplay.map(
-          genre =>
+          (genre, index) =>
             genre && (
-              <Text key={genre?.id} style={styles.genreText}>
-                {genre?.name}
-              </Text>
+              <View
+                key={genre?.id}
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                {index > 0 && <DotIcon />}
+                <Text style={styles.genreText}>{genre?.name}</Text>
+              </View>
             ),
         )}
       </View>
@@ -57,13 +59,13 @@ const ProgramPoster: React.FC<Props> = ({program}) => {
         <Text style={styles.originalText}>MOVY ORIGINAL</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={[styles.button, {marginTop: 5}]}>
           <PlusIcon style={{alignSelf: 'center'}} />
-          <Text style={styles.buttonText}>My List</Text>
+          <Text style={[styles.buttonText, {marginTop: 23}]}>My List</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <PlayIcon />
-          <Text style={styles.buttonText}>Play</Text>
+          <Text style={[styles.buttonText, {marginTop: 11}]}>Play</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <InfoIcon style={{}} />
@@ -95,24 +97,26 @@ const styles = StyleSheet.create({
   genreContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 80,
+    marginBottom: 20,
   },
   genreText: {
     color: 'white',
     paddingHorizontal: 6,
+    fontSize: 16,
   },
   originalBadge: {
-    bottom: 120,
+    marginBottom: 50,
     paddingHorizontal: 12,
     paddingVertical: 4,
     backgroundColor: '#0578FF',
-    opacity: 30,
+    opacity: 0.3,
     borderRadius: 4,
   },
   originalText: {
+    // color: '#0578FF',
     color: 'white',
     fontWeight: 'bold',
+    opacity: 1,
   },
   buttonContainer: {
     flexDirection: 'row',
