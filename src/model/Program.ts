@@ -11,6 +11,7 @@ export default interface Program {
   mediaType: 'tv' | 'movie';
   posterHighQualityPath: string;
   backdropPath: string;
+  genres: number[];
 }
 
 export const fromApiToModel = (apiProgram: ApiProgram): Program => {
@@ -22,5 +23,6 @@ export const fromApiToModel = (apiProgram: ApiProgram): Program => {
     backdropPath: BASE_IMAGE_URL + apiProgram.backdrop_path,
     posterPath: BASE_IMAGE_URL + apiProgram.poster_path,
     posterHighQualityPath: BASE_HIGH_QUALITY_IMAGE_URL + apiProgram.poster_path,
+    genres: apiProgram.genre_ids,
   };
 };

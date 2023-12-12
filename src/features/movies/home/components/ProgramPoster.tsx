@@ -2,14 +2,27 @@ import {Image} from 'expo-image';
 import {LinearGradient} from 'expo-linear-gradient';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import InfoIcon from '../../../../../res/InfoIcon.svg';
 import TitleLogo from '../../../../../res/MovyTitle.svg';
+import PlayIcon from '../../../../../res/PlayIcon.svg';
+import PlusIcon from '../../../../../res/PlusIcon.svg';
 import Program from '../../../../model/Program';
+import {useGenres} from '../../../queries';
 
 export type Props = {
   program: Program;
 };
 
 const ProgramPoster: React.FC<Props> = ({program}) => {
+  const genres = useGenres();
+  const genresToDisplay =
+    program.genres.map(genreId =>
+      genres?.data?.find(genre => genre.id === genreId),
+    ) ?? [];
+
+  console.log(genresToDisplay);
+  console.log('genre: ', genres);
+
   return (
     <View style={styles.container}>
       <Image
@@ -31,21 +44,29 @@ const ProgramPoster: React.FC<Props> = ({program}) => {
       />
       <TitleLogo style={styles.title} />
       <View style={styles.genreContainer}>
-        <Text style={styles.genreText}>Kids</Text>
-        <Text style={styles.genreText}>Fantasy Movie</Text>
-        <Text style={styles.genreText}>Action</Text>
+        {genresToDisplay.map(
+          genre =>
+            genre && (
+              <Text key={genre?.id} style={styles.genreText}>
+                {genre?.name}
+              </Text>
+            ),
+        )}
       </View>
       <View style={styles.originalBadge}>
         <Text style={styles.originalText}>MOVY ORIGINAL</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
+          <PlusIcon style={{alignSelf: 'center'}} />
           <Text style={styles.buttonText}>My List</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
+          <PlayIcon />
           <Text style={styles.buttonText}>Play</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
+          <InfoIcon style={{}} />
           <Text style={styles.buttonText}>Info</Text>
         </TouchableOpacity>
       </View>
@@ -82,7 +103,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
   },
   originalBadge: {
-    position: 'absolute',
     bottom: 120,
     paddingHorizontal: 12,
     paddingVertical: 4,
@@ -100,14 +120,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 10,
-    backgroundColor: 'blue',
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    alignContent: 'center',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 

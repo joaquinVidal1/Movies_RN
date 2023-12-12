@@ -11,6 +11,7 @@ import ProgramsList from './components/ProgramsList';
 
 const MoviesScreen = () => {
   const trendingProgramsResult = useTrendingPrograms();
+  const isLoading = trendingProgramsResult.isLoading;
   const [topTrendingProgram, ...trendingPrograms] =
     trendingProgramsResult.isSuccess ? trendingProgramsResult.data : [];
   const myList = useMyList();
@@ -27,11 +28,11 @@ const MoviesScreen = () => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <ProgramPoster program={topTrendingProgram} />
-        <ProgramsList
+        {/* <ProgramsList
           programs={myList.data}
           title="My List"
           style={{...styles.list, marginTop: 83}}
-        />
+        /> */}
         <ProgramsList
           programs={trendingPrograms}
           title="Trending Now"

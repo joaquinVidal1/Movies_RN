@@ -1,4 +1,5 @@
 import {AxiosResponse} from 'axios';
+import Genre from '../../model/Genre';
 import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
 
@@ -49,4 +50,13 @@ export const getMyList = async (): Promise<ApiProgram[]> => {
     );
 
   return movies.data.results.concat(tvSeries.data.results);
+};
+
+export const getGenres = async (): Promise<Genre[]> => {
+  try {
+    const response = await instance.get('/genre/movie/list');
+    return response.data.genres;
+  } catch (e) {
+    return Promise.reject(e);
+  }
 };

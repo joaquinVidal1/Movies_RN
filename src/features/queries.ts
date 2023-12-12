@@ -1,5 +1,6 @@
 import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
 import {
+  getGenres,
   getMyList,
   getTopRatedMovies,
   getTrendingPrograms,
@@ -25,6 +26,10 @@ const upcomingKeys = {
 
 const topRatedKeys = {
   all: ['topRated'],
+};
+
+const genresKeys = {
+  all: ['genres'],
 };
 
 const baseInfiteQuery = (
@@ -84,4 +89,11 @@ export const useTrendingPrograms = () => {
 
 export const useTopRatedMovies = () => {
   return baseInfiteQuery(topRatedKeys.all, getTopRatedMovies);
+};
+
+export const useGenres = () => {
+  return useQuery({
+    queryKey: genresKeys.all,
+    queryFn: getGenres,
+  });
 };
