@@ -26,7 +26,7 @@ const MoviesScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} bounces={true}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <ProgramPoster program={topTrendingProgram} />
         {/* <ProgramsList
           programs={myList.data}
