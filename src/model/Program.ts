@@ -23,6 +23,6 @@ export const fromApiToModel = (apiProgram: ApiProgram): Program => {
     backdropPath: BASE_IMAGE_URL + apiProgram.backdrop_path,
     posterPath: BASE_IMAGE_URL + apiProgram.poster_path,
     posterHighQualityPath: BASE_HIGH_QUALITY_IMAGE_URL + apiProgram.poster_path,
-    genres: apiProgram.genre_ids,
+    genres: apiProgram.genre_ids ?? [],
   };
 };

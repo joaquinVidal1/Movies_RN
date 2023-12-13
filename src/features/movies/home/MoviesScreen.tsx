@@ -1,54 +1,38 @@
 import React from 'react';
-import {ScrollView, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {
-  useMyList,
   useTopRatedMovies,
   useTrendingPrograms,
   useUpcomingMovies,
 } from '../../queries';
+import InfiniteScrollingList from './components/InfiniteScrollingList';
 import ProgramPoster from './components/ProgramPoster';
-import ProgramsList from './components/ProgramsList';
+import ProgramsListContainer from './components/ProgramsListContainer';
 
 const MoviesScreen = () => {
-  const trendingProgramsResult = useTrendingPrograms();
-  const isLoading = trendingProgramsResult.isLoading;
-  const [topTrendingProgram, ...trendingPrograms] =
-    trendingProgramsResult.isSuccess ? trendingProgramsResult.data : [];
-  const myList = useMyList();
-  const {data: upComingMovies, fetchNextPage: fetchMoreUpcomingMovies} =
-    useUpcomingMovies();
-  const {data: topRatedMovies, fetchNextPage: fetchMoreTopRatedMovies} =
-    useTopRatedMovies();
-
-  const {height} = useWindowDimensions();
-
-  if (trendingProgramsResult.isLoading) return <></>;
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} bounces={false}>
-        <ProgramPoster program={topTrendingProgram} />
+        <ProgramPoster />
         {/* <ProgramsList
           programs={myList.data}
           title="My List"
           style={{...styles.list, marginTop: 83}}
         /> */}
-        <ProgramsList
-          programs={trendingPrograms}
+        <ProgramsListContainer
+          useGetPrograms={useTrendingPrograms}
           title="Trending Now"
           style={styles.list}
         />
-        <ProgramsList
-          programs={upComingMovies}
-          title="Upcoming"
+        <InfiniteScrollingList
+          useGetPrograms={useUpcomingMovies}
           style={styles.list}
-          onEndReached={fetchMoreUpcomingMovies}
+          title={'Upcoming'}
         />
-        <ProgramsList
-          programs={topRatedMovies}
-          title="Top Rated"
-          style={{...styles.list, marginBottom: 65}}
-          onEndReached={fetchMoreTopRatedMovies}
+        <InfiniteScrollingList
+          useGetPrograms={useTopRatedMovies}
+          style={{...styles.list, marginBottom: 60}}
+          title={'Top Rated'}
         />
       </ScrollView>
     </View>

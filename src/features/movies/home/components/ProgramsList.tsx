@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  StyleProp,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {FlatList, StyleProp, StyleSheet, Text, View} from 'react-native';
 import Program from '../../../../model/Program';
 import {colors} from '../../../shared/color';
 import ProgramCover from './ProgramCover';
@@ -23,10 +16,6 @@ const ProgramsList: React.FC<Props> = ({
   style,
   onEndReached,
 }) => {
-  const {width: screenWidth} = useWindowDimensions();
-  const itemWidth = (screenWidth - 33) / 4;
-  console.log(itemWidth);
-
   return (
     <View style={[styles.container, {...style, marginStart: 0}]}>
       <Text style={[styles.title, {marginStart: style.marginStart}]}>

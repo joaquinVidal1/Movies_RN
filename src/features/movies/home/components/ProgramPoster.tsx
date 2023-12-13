@@ -7,19 +7,17 @@ import TitleLogo from '../../../../../res/MovyTitle.svg';
 import DotIcon from '../../../../../res/Oval.svg';
 import PlayIcon from '../../../../../res/PlayIcon.svg';
 import PlusIcon from '../../../../../res/PlusIcon.svg';
-import Program from '../../../../model/Program';
-import {useGenres} from '../../../queries';
+import {useLatestMovie} from '../../../queries';
 
-export type Props = {
-  program: Program;
-};
+const ProgramPoster: React.FC = () => {
+  const {data: program} = useLatestMovie();
 
-const ProgramPoster: React.FC<Props> = ({program}) => {
-  const genres = useGenres();
-  const genresToDisplay =
-    program.genres.map(genreId =>
-      genres?.data?.find(genre => genre.id === genreId),
-    ) ?? [];
+  if (!program) {
+    console.log('entro if');
+    return <View></View>;
+  }
+
+  console.log('program: ', program);
 
   return (
     <View style={styles.container}>
@@ -43,7 +41,7 @@ const ProgramPoster: React.FC<Props> = ({program}) => {
       />
       <TitleLogo style={styles.title} />
       <View style={styles.genreContainer}>
-        {genresToDisplay.map(
+        {program.genres?.map(
           (genre, index) =>
             genre && (
               <View
@@ -119,6 +117,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     marginBottom: 30,
+    alignSelf: 'center',
   },
   button: {
     marginHorizontal: 10,
