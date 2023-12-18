@@ -7,7 +7,7 @@ export interface ApiProgram {
   original_title: string;
   overview: string;
   poster_path: string;
-  media_type: 'tv' | 'movie';
+  media_type: MediaType;
   genre_ids: number[];
   popularity: number;
   release_date: string;
@@ -22,3 +22,5 @@ export interface ApiPaginatedResponse<T> {
   total_pages: number;
   total_results: number;
 }
+
+export type MediaType = 'tv' | 'movie';

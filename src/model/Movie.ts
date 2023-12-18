@@ -5,7 +5,6 @@ export default interface Movie {
   title: string;
   overview: string;
   posterPath: string;
-  mediaType: 'tv' | 'movie';
   posterHighQualityPath: string;
   backdropPath: string;
   genres: genre[];

@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {
+  useMyList,
   useTopRatedMovies,
   useTrendingPrograms,
   useUpcomingMovies,
@@ -14,11 +15,11 @@ const MoviesScreen = () => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} bounces={false}>
         <ProgramPoster />
-        {/* <ProgramsList
-          programs={myList.data}
+        <InfiniteScrollingList
+          useGetPrograms={useMyList}
           title="My List"
           style={{...styles.list, marginTop: 83}}
-        /> */}
+        />
         <ProgramsListContainer
           useGetPrograms={useTrendingPrograms}
           title="Trending Now"

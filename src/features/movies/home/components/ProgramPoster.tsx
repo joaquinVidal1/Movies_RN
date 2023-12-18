@@ -1,16 +1,24 @@
 import {Image} from 'expo-image';
 import {LinearGradient} from 'expo-linear-gradient';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import InfoIcon from '../../../../../res/InfoIcon.svg';
 import TitleLogo from '../../../../../res/MovyTitle.svg';
 import DotIcon from '../../../../../res/Oval.svg';
 import PlayIcon from '../../../../../res/PlayIcon.svg';
 import PlusIcon from '../../../../../res/PlusIcon.svg';
-import {useLatestMovie} from '../../../queries';
+import {useAddMovieToWatchlist, useLatestMovie} from '../../../queries';
 
 const ProgramPoster: React.FC = () => {
   const {data: program} = useLatestMovie();
+
+  const getParams = useCallback(() => {
+    return {
+      mediaId: program?.id,
+    };
+  }, [program]);
+
+  const {mutate: addMovieToWatchList} = useAddMovieToWatchlist(getParams);
 
   if (!program) {
     console.log('entro if');
@@ -57,7 +65,9 @@ const ProgramPoster: React.FC = () => {
         <Text style={styles.originalText}>MOVY ORIGINAL</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, {marginTop: 5}]}>
+        <TouchableOpacity
+          style={[styles.button, {marginTop: 5}]}
+          onPress={() => addMovieToWatchList()}>
           <PlusIcon style={{alignSelf: 'center'}} />
           <Text style={[styles.buttonText, {marginTop: 23}]}>My List</Text>
         </TouchableOpacity>

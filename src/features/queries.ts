@@ -1,4 +1,9 @@
-import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {
   getGenres,
   getLatestMovie,
@@ -10,7 +15,10 @@ import {
   ApiPaginatedResponse,
   ApiProgram,
 } from './../infraestructure/api/ApiProgram';
-import {getUpcomingMovies} from './../infraestructure/api/endpoints';
+import {
+  addMovieToWatchlist,
+  getUpcomingMovies,
+} from './../infraestructure/api/endpoints';
 import {fromApiToModel} from './../model/Program';
 
 const programsKeys = {
@@ -77,11 +85,7 @@ export const useUpcomingMovies = () => {
 };
 
 export const useMyList = () => {
-  return useQuery({
-    queryKey: myListKeys.all,
-    queryFn: getMyList,
-    select: data => data.map(apiProgram => fromApiToModel(apiProgram)),
-  });
+  return baseInfiteQuery(myListKeys.all, getMyList);
 };
 
 export const useTrendingPrograms = () => {
@@ -107,5 +111,23 @@ export const useLatestMovie = () => {
   return useQuery({
     queryKey: latestMovieKeys.all,
     queryFn: getLatestMovie,
+  });
+};
+
+export const useAddMovieToWatchlist = (
+  getParams: () => {
+    mediaId: number;
+  },
+) => {
+  const queryClient = useQueryClient();
+
+  const {mediaId} = getParams();
+  console.log('in useAddMovieToWatchlist', 'mediaId: ', mediaId);
+
+  return useMutation({
+    mutationFn: () => addMovieToWatchlist(mediaId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: myListKeys.all});
+    },
   });
 };
