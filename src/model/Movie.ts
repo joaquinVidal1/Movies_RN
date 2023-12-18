@@ -8,4 +8,5 @@ export default interface Movie {
   posterHighQualityPath: string;
   backdropPath: string;
   genres: genre[];
+  vote_average: number;
 }
