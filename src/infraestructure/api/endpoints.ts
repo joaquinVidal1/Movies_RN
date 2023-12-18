@@ -116,6 +116,7 @@ export const searchMovies = async (
   query: string,
   page: number,
 ): Promise<ApiPaginatedResponse<Movie[]>> => {
+  console.log('search movies: ', query);
   try {
     const response = await instance.get(
       `/search/movie?query=${query}&include_adult=true&language=en-US&page=${page}`,

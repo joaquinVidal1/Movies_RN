@@ -16,7 +16,6 @@ const MoviesList: React.FC<Props> = ({movies, style, onEndReached}) => {
         contentContainerStyle={{
           marginStart: style.marginStart,
         }}
-        horizontal
         data={movies}
         keyExtractor={(program, index) =>
           program.id.toString() + index.toString()

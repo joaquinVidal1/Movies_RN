@@ -5,7 +5,11 @@ import MicIcon from '../../../../res/MicIcon.svg';
 import SearchIcon from '../../../../res/SearchIcon.svg';
 import {colors} from '../../shared/color';
 
-const Header = () => {
+export type Props = {
+  onQueryChanged: (newQuery: string) => void;
+};
+
+const Header: React.FC<Props> = ({onQueryChanged}) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -18,6 +22,7 @@ const Header = () => {
             multiline={false}
             placeholderTextColor={colors.primaryColor}
             placeholder="Search for a movie that you love"
+            onChangeText={onQueryChanged}
           />
           <TouchableOpacity style={{marginEnd: 20}}>
             <MicIcon />

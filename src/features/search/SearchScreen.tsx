@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {colors} from '../shared/color';
 import Header from './components/Header';
 import MoviesList from './components/MoviesList';
+import {useSearchMovies} from './queries';
 
 const SearchScreen = () => {
+  const [query, setQuery] = useState('');
+  const {data: movies, fetchNextPage} = useSearchMovies(query);
+
   return (
     <View>
-      <Header />
-      <MoviesList movies={[]} style={{}} onEndReached={} />
+      <Header onQueryChanged={setQuery} />
+      <MoviesList movies={movies} style={{}} onEndReached={fetchNextPage} />
     </View>
   );
 };

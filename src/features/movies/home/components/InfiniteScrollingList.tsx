@@ -1,6 +1,6 @@
 import {InfiniteQueryObserverResult} from '@tanstack/react-query';
 import React from 'react';
-import {StyleProp, ViewStyle} from 'react-native/types';
+import {ViewStyle} from 'react-native/types';
 import Program from '../../../../model/Program';
 import ProgramsList from './ProgramsList';
 
@@ -23,7 +23,7 @@ export type Props = {
       >
     >;
   };
-  style: StyleProp<ViewStyle>;
+  style: ViewStyle;
   title: string;
 };
 

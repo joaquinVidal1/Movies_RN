@@ -7,8 +7,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import FilledStarIcon from '../../../../res/FilledStarIcon.svg';
-import HalfFilledStarIcon from '../../../../res/HalfFilledStarIcon.svg';
+import FilledStarIcon from '../../../../res/FilledStar.svg';
+import HalfFilledStarIcon from '../../../../res/HalfFilledStar.svg';
 import Movie from '../../../model/Movie';
 import {colors} from '../../shared/color';
 
