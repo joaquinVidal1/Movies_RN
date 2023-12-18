@@ -25,7 +25,7 @@ const ProgramPoster: React.FC = () => {
     return <View></View>;
   }
 
-  console.log('program: ', program);
+  console.log('posterPath: ', program.posterPath);
 
   return (
     <View style={styles.container}>

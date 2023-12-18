@@ -18,7 +18,7 @@ const MoviesScreen = () => {
         <InfiniteScrollingList
           useGetPrograms={useMyList}
           title="My List"
-          style={{...styles.list, marginTop: 83}}
+          style={{...styles.list, marginTop: 43}}
         />
         <ProgramsListContainer
           useGetPrograms={useTrendingPrograms}

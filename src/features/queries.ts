@@ -122,7 +122,6 @@ export const useAddMovieToWatchlist = (
   const queryClient = useQueryClient();
 
   const {mediaId} = getParams();
-  console.log('in useAddMovieToWatchlist', 'mediaId: ', mediaId);
 
   return useMutation({
     mutationFn: () => addMovieToWatchlist(mediaId),

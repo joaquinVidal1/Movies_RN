@@ -1,7 +1,7 @@
 import {ApiProgram} from './../infraestructure/api/ApiProgram';
 
-const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w200';
-const BASE_HIGH_QUALITY_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+export const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w200';
+export const BASE_HIGH_QUALITY_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
 
 export default interface Program {
   id: number;

@@ -1,6 +1,7 @@
 import {AxiosResponse} from 'axios';
 import Genre from '../../model/Genre';
 import Movie from '../../model/Movie';
+import {BASE_HIGH_QUALITY_IMAGE_URL, BASE_IMAGE_URL} from '../../model/Program';
 import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
 
@@ -86,7 +87,13 @@ export const getGenres = async (): Promise<Genre[]> => {
 export const getLatestMovie = async (): Promise<Movie> => {
   try {
     const movie = await instance.get('/movie/latest');
-    return movie.data;
+    return {
+      ...movie.data,
+      backdropPath: BASE_IMAGE_URL + movie.data.backdrop_path,
+      posterPath: BASE_IMAGE_URL + movie.data.poster_path,
+      posterHighQualityPath:
+        BASE_HIGH_QUALITY_IMAGE_URL + movie.data.poster_path,
+    };
   } catch (e) {
     return Promise.reject(e);
   }
