@@ -1,20 +1,40 @@
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
+import {DarkTheme, NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {StatusBar} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {colors} from '../features/shared/color';
+import QueryProvider from '../infraestructure/query/QueryProvideer';
+import AppTabsFlow from './flows/AppFlow';
+import AuthFlow from './flows/AuthFlow';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const MoviesTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: colors.primaryColor,
+    background: colors.backgroundColor,
+    text: colors.primaryColor,
+  },
+};
+
+function App() {
+  const isUserLogged = false;
+
+  return isUserLogged ? <AuthFlow /> : <AppTabsFlow />;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () => {
+  return (
+    <NavigationContainer theme={MoviesTheme}>
+      <QueryProvider>
+        <SafeAreaProvider>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor={colors.backgroundColor}
+          />
+          <App />
+        </SafeAreaProvider>
+      </QueryProvider>
+    </NavigationContainer>
+  );
+};
