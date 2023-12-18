@@ -17,7 +17,7 @@ export type Props = {
   style: StyleProp<ViewStyle>;
 };
 
-const Movie: React.FC<Props> = ({movie, style}) => {
+const SearchMovie: React.FC<Props> = ({movie, style}) => {
   const amountOfFilledStars = Math.floor(movie.vote_average / 2);
   const showHalfStart = Math.round(movie.vote_average) % 2 >= 1;
 
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Movie;
+export default SearchMovie;

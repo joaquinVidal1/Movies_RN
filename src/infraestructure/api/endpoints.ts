@@ -111,3 +111,17 @@ export const addMovieToWatchlist = async (id: number) => {
     return Promise.reject(e);
   }
 };
+
+export const searchMovies = async (
+  query: string,
+  page: number,
+): Promise<ApiPaginatedResponse<Movie[]>> => {
+  try {
+    const response = await instance.get(
+      `/search/movie?query=${query}&include_adult=true&language=en-US&page=${page}`,
+    );
+    return response.data;
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};

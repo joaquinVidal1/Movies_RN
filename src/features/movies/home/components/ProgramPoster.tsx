@@ -7,7 +7,7 @@ import TitleLogo from '../../../../../res/MovyTitle.svg';
 import DotIcon from '../../../../../res/Oval.svg';
 import PlayIcon from '../../../../../res/PlayIcon.svg';
 import PlusIcon from '../../../../../res/PlusIcon.svg';
-import {useAddMovieToWatchlist, useLatestMovie} from '../../../queries';
+import {useAddMovieToWatchlist, useLatestMovie} from '../queries';
 
 const ProgramPoster: React.FC = () => {
   const {data: program} = useLatestMovie();

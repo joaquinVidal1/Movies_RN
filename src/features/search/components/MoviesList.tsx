@@ -1,36 +1,27 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View, ViewStyle} from 'react-native';
-import Program from '../../../../model/Program';
-import {colors} from '../../../shared/color';
-import ProgramCover from './ProgramCover';
+import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
+import Movie from '../../../model/Movie';
+import {colors} from '../../shared/color';
+import SearchMovie from './SearchMovie';
 
 export type Props = {
-  programs: Program[];
-  title: string;
+  movies: Movie[];
   style: ViewStyle;
-  onEndReached?: () => void;
+  onEndReached: () => void;
 };
-const ProgramsList: React.FC<Props> = ({
-  programs,
-  title,
-  style,
-  onEndReached,
-}) => {
+const MoviesList: React.FC<Props> = ({movies, style, onEndReached}) => {
   return (
     <View style={[styles.container, {...style, marginStart: 0}]}>
-      <Text style={[styles.title, {marginStart: style.marginStart}]}>
-        {title}
-      </Text>
       <FlatList
         contentContainerStyle={{
           marginStart: style.marginStart,
         }}
         horizontal
-        data={programs}
+        data={movies}
         keyExtractor={(program, index) =>
           program.id.toString() + index.toString()
         }
-        renderItem={program => <ProgramCover program={program.item} />}
+        renderItem={movie => <SearchMovie movie={movie.item} style={{}} />}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.7}
       />
@@ -49,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgramsList;
+export default MoviesList;

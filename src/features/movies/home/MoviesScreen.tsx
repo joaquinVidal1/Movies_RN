@@ -1,14 +1,14 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import InfiniteScrollingList from './components/InfiniteScrollingList';
+import ProgramPoster from './components/ProgramPoster';
+import ProgramsListContainer from './components/ProgramsListContainer';
 import {
   useMyList,
   useTopRatedMovies,
   useTrendingPrograms,
   useUpcomingMovies,
-} from '../../queries';
-import InfiniteScrollingList from './components/InfiniteScrollingList';
-import ProgramPoster from './components/ProgramPoster';
-import ProgramsListContainer from './components/ProgramsListContainer';
+} from './queries';
 
 const MoviesScreen = () => {
   return (
