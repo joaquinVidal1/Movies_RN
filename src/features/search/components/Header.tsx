@@ -39,7 +39,7 @@ const Header: React.FC<Props> = ({onQueryChanged}) => {
             onChangeText={onQueryChanged}
             ref={textInputRef}
           />
-          <TouchableOpacity style={{marginEnd: 20}}>
+          <TouchableOpacity style={{marginEnd: 20}} onPress={onSearchIconPress}>
             <MicIcon />
           </TouchableOpacity>
         </View>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.headerBackgroundColor,
     width: '100%',
+    paddingBottom: 10,
   },
   searchBar: {
     alignContent: 'space-between',

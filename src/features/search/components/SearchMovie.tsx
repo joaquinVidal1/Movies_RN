@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   starsContainer: {
     flexDirection: 'row',
     marginTop: 12,
+    alignItems: 'center',
   },
   dataContainer: {
     marginStart: 30,
