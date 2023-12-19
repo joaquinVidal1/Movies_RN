@@ -7,9 +7,9 @@ import {instance} from './instance';
 
 const ACCOUNT_ID = '20375605';
 
-const fetchProgramsFromApi = (
+function fetchProgramsFromApi<T>(
   uri: string,
-): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
+): Promise<ApiPaginatedResponse<T[]>> {
   return instance
     .get(uri)
     .then(response => {
@@ -23,7 +23,7 @@ const fetchProgramsFromApi = (
       console.log(error);
       throw error;
     });
-};
+}
 
 export const getTrendingPrograms = (): Promise<
   ApiPaginatedResponse<ApiProgram[]>
@@ -31,15 +31,15 @@ export const getTrendingPrograms = (): Promise<
   return fetchProgramsFromApi('/trending/all/day');
 };
 
-export const getUpcomingMovies = (
-  page: number,
-): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
-  return fetchProgramsFromApi(`/movie/upcoming?language=en-US&page=${page}`);
+export const getUpcomingMovies = (page: number) => {
+  return fetchProgramsFromApi<ApiProgram>(
+    `/movie/upcoming?language=en-US&page=${page}`,
+  );
 };
 
 export const getTopRatedMovies = (
   page: number,
-): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
+): Promise<ApiPaginatedResponse<Movie[]>> => {
   return fetchProgramsFromApi(`movie/top_rated?language=en-US&page=${page}`);
 };
 
@@ -116,13 +116,7 @@ export const searchMovies = async (
   query: string,
   page: number,
 ): Promise<ApiPaginatedResponse<Movie[]>> => {
-  console.log('search movies: ', query);
-  try {
-    const response = await instance.get(
-      `/search/movie?query=${query}&include_adult=true&language=en-US&page=${page}`,
-    );
-    return response.data;
-  } catch (e) {
-    return Promise.reject(e);
-  }
+  return fetchProgramsFromApi(
+    `/search/movie?query=${query}&include_adult=true&language=en-US&page=${page}`,
+  );
 };

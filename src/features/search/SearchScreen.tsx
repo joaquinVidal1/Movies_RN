@@ -12,7 +12,11 @@ const SearchScreen = () => {
   return (
     <View>
       <Header onQueryChanged={setQuery} />
-      <MoviesList movies={movies} style={{}} onEndReached={fetchNextPage} />
+      <MoviesList
+        movies={movies}
+        style={{marginStart: 20}}
+        onEndReached={fetchNextPage}
+      />
     </View>
   );
 };

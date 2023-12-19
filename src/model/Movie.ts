@@ -4,9 +4,9 @@ export default interface Movie {
   id: number;
   title: string;
   overview: string;
-  posterPath: string;
-  posterHighQualityPath: string;
-  backdropPath: string;
+  poster_path: string;
+  poster_high_quality_path: string;
+  backdrop_path: string;
   genres: genre[];
   vote_average: number;
 }

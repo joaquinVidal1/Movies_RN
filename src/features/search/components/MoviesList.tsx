@@ -29,9 +29,7 @@ const MoviesList: React.FC<Props> = ({movies, style, onEndReached}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'flex-start',
-  },
+  container: {},
   title: {
     color: colors.primaryColor,
     fontSize: 18,

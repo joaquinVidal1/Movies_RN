@@ -21,17 +21,14 @@ const ProgramPoster: React.FC = () => {
   const {mutate: addMovieToWatchList} = useAddMovieToWatchlist(getParams);
 
   if (!program) {
-    console.log('entro if');
     return <View></View>;
   }
-
-  console.log('posterPath: ', program.posterPath);
 
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: program.posterHighQualityPath,
+          uri: program.poster_high_quality_path,
         }}
         style={[styles.poster]}
       />

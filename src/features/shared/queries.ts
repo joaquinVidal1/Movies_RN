@@ -1,14 +1,12 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
-import {
-  ApiPaginatedResponse,
-  ApiProgram,
-} from '../../infraestructure/api/ApiProgram';
+import {ApiPaginatedResponse} from '../../infraestructure/api/ApiProgram';
 import {fromApiToModel} from '../../model/Program';
+import {ApiProgram} from './../../infraestructure/api/ApiProgram';
 
-export const baseInfiteQuery = (
+export function baseInfiteQuery(
   queryKeys: string[],
   queryFn: (page: number) => Promise<ApiPaginatedResponse<ApiProgram[]>>,
-) => {
+) {
   const res = useInfiniteQuery({
     queryKey: queryKeys,
     queryFn: ({pageParam}: {pageParam: number}) => {
@@ -38,4 +36,4 @@ export const baseInfiteQuery = (
     initialPageParam: 1,
   });
   return {...res, data: res.data?.pages?.flatMap(page => page.results)};
-};
+}
