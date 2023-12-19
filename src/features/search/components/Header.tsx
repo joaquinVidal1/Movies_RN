@@ -1,5 +1,11 @@
-import React from 'react';
-import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useRef} from 'react';
+import {
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MicIcon from '../../../../res/MicIcon.svg';
 import SearchIcon from '../../../../res/SearchIcon.svg';
@@ -10,11 +16,19 @@ export type Props = {
 };
 
 const Header: React.FC<Props> = ({onQueryChanged}) => {
+  const textInputRef = useRef<TextInput>(null);
+
+  const onSearchIconPress = () => {
+    Keyboard.isVisible() ? Keyboard.dismiss() : textInputRef.current.focus();
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
         <View style={styles.searchBar}>
-          <TouchableOpacity style={{marginStart: 20}}>
+          <TouchableOpacity
+            style={{marginStart: 20}}
+            onPress={onSearchIconPress}>
             <SearchIcon />
           </TouchableOpacity>
           <TextInput
@@ -23,6 +37,7 @@ const Header: React.FC<Props> = ({onQueryChanged}) => {
             placeholderTextColor={colors.primaryColor}
             placeholder="Search for a movie that you love"
             onChangeText={onQueryChanged}
+            ref={textInputRef}
           />
           <TouchableOpacity style={{marginEnd: 20}}>
             <MicIcon />
