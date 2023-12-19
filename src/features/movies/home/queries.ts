@@ -1,9 +1,4 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {
   addMovieToWatchlist,
   getGenres,
@@ -14,7 +9,6 @@ import {
   getUpcomingMovies,
 } from '../../../infraestructure/api/endpoints';
 import {fromApiToModel} from '../../../model/Program';
-import {parseMovieImages} from './../../../model/Movie';
 import {baseInfiteQuery} from './../../shared/queries';
 
 const programsKeys = {
@@ -58,37 +52,7 @@ export const useTrendingPrograms = () => {
 };
 
 export const useTopRatedMovies = () => {
-  const res = useInfiniteQuery({
-    queryKey: topRatedKeys.all,
-    queryFn: ({pageParam}: {pageParam: number}) => {
-      return getTopRatedMovies(pageParam);
-    },
-    getNextPageParam: lastPage => {
-      const nextPage = lastPage.page + 1;
-      if (nextPage > lastPage.total_pages) return undefined;
-      else return nextPage;
-    },
-    getPreviousPageParam: firstPage => {
-      const prevPage = firstPage.page - 1;
-      if (prevPage <= 0) return undefined;
-      else return prevPage;
-    },
-    select: data => {
-      return {
-        ...data,
-        pages: data.pages.map(page => {
-          return {
-            ...page,
-            results: page.results.map(movie => {
-              return parseMovieImages(movie);
-            }),
-          };
-        }),
-      };
-    },
-    initialPageParam: 1,
-  });
-  return {...res, data: res.data?.pages?.flatMap(page => page.results)};
+  return baseInfiteQuery(topRatedKeys.all, getTopRatedMovies);
 };
 
 export const useGenres = () => {

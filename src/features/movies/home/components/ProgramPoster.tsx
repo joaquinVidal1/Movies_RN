@@ -28,7 +28,7 @@ const ProgramPoster: React.FC = () => {
     <View style={styles.container}>
       <Image
         source={{
-          uri: program.poster_high_quality_path,
+          uri: program.poster_path,
         }}
         style={[styles.poster]}
       />

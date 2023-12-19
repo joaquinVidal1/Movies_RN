@@ -12,6 +12,7 @@ export default interface Program {
   posterHighQualityPath: string;
   backdropPath: string;
   genres: number[];
+  voteAverage: number;
 }
 
 export const fromApiToModel = (apiProgram: ApiProgram): Program => {
@@ -24,5 +25,6 @@ export const fromApiToModel = (apiProgram: ApiProgram): Program => {
     posterPath: BASE_IMAGE_URL + apiProgram.poster_path,
     posterHighQualityPath: BASE_HIGH_QUALITY_IMAGE_URL + apiProgram.poster_path,
     genres: apiProgram.genre_ids ?? [],
+    voteAverage: apiProgram.vote_average,
   };
 };

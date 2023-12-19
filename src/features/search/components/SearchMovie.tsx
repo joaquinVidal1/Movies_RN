@@ -9,23 +9,22 @@ import {
 } from 'react-native';
 import FilledStarIcon from '../../../../res/FilledStar.svg';
 import HalfFilledStarIcon from '../../../../res/HalfFilledStar.svg';
-import Movie from '../../../model/Movie';
+import Program from '../../../model/Program';
 import {colors} from '../../shared/color';
 
 export type Props = {
-  movie: Movie;
+  movie: Program;
   style: StyleProp<ViewStyle>;
 };
 
 const SearchMovie: React.FC<Props> = ({movie, style}) => {
-  console.log('movie image: ', movie.poster_path);
   const amountOfFilledStars =
-    movie.vote_average > 0 ? Math.floor(movie.vote_average / 2) : 0;
-  const showHalfStart = Math.round(movie.vote_average) % 2 >= 1;
+    movie.voteAverage > 0 ? Math.floor(movie.voteAverage / 2) : 0;
+  const showHalfStart = Math.round(movie.voteAverage) % 2 >= 1;
   return (
     <View style={[styles.container, style]}>
       <Image
-        source={{uri: movie.backdrop_path}}
+        source={{uri: movie.backdropPath}}
         style={{height: 90, aspectRatio: 16 / 9}}
       />
       <View style={styles.dataContainer}>

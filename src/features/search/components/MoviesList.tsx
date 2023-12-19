@@ -1,11 +1,11 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
-import Movie from '../../../model/Movie';
+import Program from '../../../model/Program';
 import {colors} from '../../shared/color';
 import SearchMovie from './SearchMovie';
 
 export type Props = {
-  movies: Movie[];
+  movies: Program[];
   style: ViewStyle;
   onEndReached: () => void;
 };

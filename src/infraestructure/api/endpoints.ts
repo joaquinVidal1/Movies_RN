@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import Genre from '../../model/Genre';
-import Movie from '../../model/Movie';
-import {parseMovieImages} from './../../model/Movie';
+import {MovieDetails} from '../../model/Movie';
+import {BASE_HIGH_QUALITY_IMAGE_URL} from './../../model/Program';
 import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
 
@@ -39,7 +39,7 @@ export const getUpcomingMovies = (page: number) => {
 
 export const getTopRatedMovies = (
   page: number,
-): Promise<ApiPaginatedResponse<Movie[]>> => {
+): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
   return fetchProgramsFromApi(`movie/top_rated?language=en-US&page=${page}`);
 };
 
@@ -84,10 +84,19 @@ export const getGenres = async (): Promise<Genre[]> => {
   }
 };
 
-export const getLatestMovie = async (): Promise<Movie> => {
+export const getLatestMovie = async (): Promise<MovieDetails> => {
   try {
-    const movie = await instance.get('/movie/latest');
-    return parseMovieImages(movie.data);
+    const topRatedMovies = await getTopRatedMovies(1);
+    const movieId = topRatedMovies.results[0].id;
+    const movieDetails: AxiosResponse<MovieDetails> = await instance.get(
+      `movie/${movieId}?language=en-US`,
+    );
+    return {
+      ...movieDetails.data,
+      backdrop_path:
+        BASE_HIGH_QUALITY_IMAGE_URL + movieDetails.data.backdrop_path,
+      poster_path: BASE_HIGH_QUALITY_IMAGE_URL + movieDetails.data.poster_path,
+    };
   } catch (e) {
     return Promise.reject(e);
   }
@@ -109,7 +118,7 @@ export const addMovieToWatchlist = async (id: number) => {
 export const searchMovies = async (
   query: string,
   page: number,
-): Promise<ApiPaginatedResponse<Movie[]>> => {
+): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
   return fetchProgramsFromApi(
     `/search/movie?query=${query}&include_adult=true&language=en-US&page=${page}`,
   );
