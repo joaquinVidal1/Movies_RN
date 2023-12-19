@@ -18,6 +18,7 @@ export type Props = {
 };
 
 const SearchMovie: React.FC<Props> = ({movie, style}) => {
+  console.log('movie image: ', movie.poster_path);
   const amountOfFilledStars =
     movie.vote_average > 0 ? Math.floor(movie.vote_average / 2) : 0;
   const showHalfStart = Math.round(movie.vote_average) % 2 >= 1;

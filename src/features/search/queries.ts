@@ -1,7 +1,7 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
-import {BASE_HIGH_QUALITY_IMAGE_URL, BASE_IMAGE_URL} from '../../model/Program';
 import {useTopRatedMovies} from '../movies/home/queries';
 import {searchMovies} from './../../infraestructure/api/endpoints';
+import {parseMovieImages} from './../../model/Movie';
 
 const searchMoviesKeys = {
   all: ['search'],
@@ -31,13 +31,7 @@ export const useSearchMovies = (query: string) => {
             return {
               ...page,
               results: page.results.map(movie => {
-                return {
-                  ...movie,
-                  backdrop_path: BASE_IMAGE_URL + movie.backdrop_path,
-                  poster_path: BASE_IMAGE_URL + movie.poster_path,
-                  poster_high_quality_path:
-                    BASE_HIGH_QUALITY_IMAGE_URL + movie.poster_path,
-                };
+                return parseMovieImages(movie);
               }),
             };
           }),

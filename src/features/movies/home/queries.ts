@@ -14,6 +14,7 @@ import {
   getUpcomingMovies,
 } from '../../../infraestructure/api/endpoints';
 import {fromApiToModel} from '../../../model/Program';
+import {parseMovieImages} from './../../../model/Movie';
 import {baseInfiteQuery} from './../../shared/queries';
 
 const programsKeys = {
@@ -72,17 +73,19 @@ export const useTopRatedMovies = () => {
       if (prevPage <= 0) return undefined;
       else return prevPage;
     },
-    // select: data => {
-    //   return {
-    //     ...data,
-    //     pages: data.pages.map(page => {
-    //       return {
-    //         ...page,
-    //         results: page.results.map(apiProgram => fromApiToModel(apiProgram)),
-    //       };
-    //     }),
-    //   };
-    // },
+    select: data => {
+      return {
+        ...data,
+        pages: data.pages.map(page => {
+          return {
+            ...page,
+            results: page.results.map(movie => {
+              return parseMovieImages(movie);
+            }),
+          };
+        }),
+      };
+    },
     initialPageParam: 1,
   });
   return {...res, data: res.data?.pages?.flatMap(page => page.results)};
