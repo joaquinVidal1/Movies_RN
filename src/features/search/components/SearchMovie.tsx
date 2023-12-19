@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primaryColor,
     fontSize: 15,
+    maxWidth: 120,
   },
   starsContainer: {
     flexDirection: 'row',
