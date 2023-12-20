@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import FilledStarIcon from '../../../../res/FilledStar.svg';
 import HalfFilledStarIcon from '../../../../res/HalfFilledStar.svg';
+import PlayIcon from '../../../../res/PlayIcon.svg';
 import Program from '../../../model/Program';
 import {colors} from '../../shared/color';
 
@@ -23,10 +24,7 @@ const SearchMovie: React.FC<Props> = ({movie, style}) => {
   const showHalfStart = Math.round(movie.voteAverage) % 2 >= 1;
   return (
     <View style={[styles.container, style]}>
-      <Image
-        source={{uri: movie.backdropPath}}
-        style={{height: 90, aspectRatio: 16 / 9}}
-      />
+      <Image source={{uri: movie.backdropPath}} style={styles.imageStyle} />
       <View style={styles.dataContainer}>
         <Text style={styles.title} ellipsizeMode={'tail'}>
           {movie.title}
@@ -37,6 +35,7 @@ const SearchMovie: React.FC<Props> = ({movie, style}) => {
           ))}
           {showHalfStart && <HalfFilledStarIcon />}
         </View>
+        <PlayIcon width={20} height={20} style={styles.playIconStyle} />
       </View>
     </View>
   );
@@ -62,6 +61,16 @@ const styles = StyleSheet.create({
   dataContainer: {
     marginStart: 30,
     alignSelf: 'center',
+    flex: 1,
+  },
+  imageStyle: {
+    height: 90,
+    aspectRatio: 16 / 9,
+  },
+  playIconStyle: {
+    alignSelf: 'flex-end',
+    marginBottom: 20,
+    marginEnd: 40,
   },
 });
 

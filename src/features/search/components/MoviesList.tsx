@@ -9,12 +9,14 @@ export type Props = {
   style: ViewStyle;
   onEndReached: () => void;
 };
+
 const MoviesList: React.FC<Props> = ({movies, style, onEndReached}) => {
   return (
     <View style={[styles.container, {...style, marginStart: 0}]}>
       <FlatList
         contentContainerStyle={{
           marginStart: style.marginStart,
+          marginTop: 20,
         }}
         data={movies}
         keyExtractor={(program, index) =>
