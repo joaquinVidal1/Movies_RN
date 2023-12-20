@@ -1,5 +1,11 @@
-import React from 'react';
-import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {tokenValue} from '../../../../infraestructure/api/instance';
 import Program from '../../../../model/Program';
 
@@ -8,11 +14,15 @@ export type Props = {
 };
 
 const ProgramCover: React.FC<Props> = ({program}) => {
+  const [isLoading, setIsLoading] = useState(true);
   const {width} = useWindowDimensions();
   const imageWidth = (width - 33) / 4;
 
+  useEffect(() => setIsLoading(true), [program]);
+
   return (
     <View style={styles.container}>
+      {isLoading && <ActivityIndicator />}
       <Image
         source={{
           uri: program.posterPath,
@@ -20,7 +30,8 @@ const ProgramCover: React.FC<Props> = ({program}) => {
             Authorization: `Bearer ${tokenValue}`,
           },
         }}
-        style={[{width: imageWidth}, styles.image]}
+        style={[{width: imageWidth}, styles.image, isLoading && {opacity: 0}]}
+        onLoadEnd={() => setIsLoading(false)}
       />
     </View>
   );
