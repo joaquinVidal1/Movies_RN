@@ -24,16 +24,10 @@ const ProgramPoster: React.FC = () => {
         source={{
           uri: program.posterHighQualityPath,
         }}
-        style={[styles.poster]}
+        style={styles.poster}
       />
       <LinearGradient
-        style={{
-          flex: 1,
-          width: '100%',
-          aspectRatio: 2 / 3,
-          position: 'absolute',
-          top: 100,
-        }}
+        style={styles.linearGradient}
         colors={['transparent', 'black', 'black']}
         start={[1, 0.5]}
         end={[1, 1]}
@@ -43,9 +37,7 @@ const ProgramPoster: React.FC = () => {
         {program.genres?.map(
           (genre, index) =>
             genre && (
-              <View
-                key={genre?.id}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View key={genre?.id} style={styles.genre}>
                 {index > 0 && <DotIcon />}
                 <Text style={styles.genreText}>{genre?.name}</Text>
               </View>
@@ -57,17 +49,17 @@ const ProgramPoster: React.FC = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[styles.button, {marginTop: 5}]}
+          style={[styles.button, styles.favouriteButton]}
           onPress={() => addMovieToWatchList(program?.id)}>
-          <PlusIcon style={{alignSelf: 'center'}} />
-          <Text style={[styles.buttonText, {marginTop: 23}]}>My List</Text>
+          <PlusIcon style={styles.plusIcon} />
+          <Text style={[styles.buttonText, styles.plusText]}>My List</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <PlayIcon />
-          <Text style={[styles.buttonText, {marginTop: 11}]}>Play</Text>
+          <Text style={[styles.buttonText, styles.playText]}>Play</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <InfoIcon style={{}} />
+          <InfoIcon />
           <Text style={styles.buttonText}>Info</Text>
         </TouchableOpacity>
       </View>
@@ -132,6 +124,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  linearGradient: {
+    flex: 1,
+    width: '100%',
+    aspectRatio: 2 / 3,
+    position: 'absolute',
+    top: 100,
+  },
+  favouriteButton: {
+    marginTop: 5,
+  },
+  genre: {flexDirection: 'row', alignItems: 'center'},
+  plusIcon: {
+    alignSelf: 'center',
+  },
+  plusText: {marginTop: 23},
+  playText: {marginTop: 11},
 });
 
 export default ProgramPoster;
