@@ -13,7 +13,7 @@ import ProgramsListContainer from './components/ProgramsListContainer';
 const MoviesScreen = () => {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} bounces={false}>
+      <ScrollView bounces={false}>
         <ProgramPoster />
         <InfiniteScrollingList
           useGetPrograms={useMyList}
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {},
 });
 
 export default MoviesScreen;

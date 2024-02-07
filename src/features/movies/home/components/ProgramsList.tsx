@@ -24,6 +24,7 @@ const ProgramsList: React.FC<Props> = ({
       <FlatList
         contentContainerStyle={{
           marginStart: style.marginStart,
+          paddingEnd: 30,
         }}
         horizontal
         data={programs}
