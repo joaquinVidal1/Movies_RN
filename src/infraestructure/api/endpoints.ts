@@ -87,6 +87,7 @@ export const getGenres = async (): Promise<Genre[]> => {
 export const getLatestMovie = async (): Promise<Movie> => {
   try {
     const movie = await instance.get('/movie/latest');
+    console.log(movie.data.genres);
     return {
       ...movie.data,
       backdropPath: BASE_IMAGE_URL + movie.data.backdrop_path,
