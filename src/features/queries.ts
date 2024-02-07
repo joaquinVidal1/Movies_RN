@@ -114,17 +114,11 @@ export const useLatestMovie = () => {
   });
 };
 
-export const useAddMovieToWatchlist = (
-  getParams: () => {
-    mediaId: number;
-  },
-) => {
+export const useAddMovieToWatchlist = () => {
   const queryClient = useQueryClient();
 
-  const {mediaId} = getParams();
-
   return useMutation({
-    mutationFn: () => addMovieToWatchlist(mediaId),
+    mutationFn: (mediaId: number) => addMovieToWatchlist(mediaId),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: myListKeys.all});
     },

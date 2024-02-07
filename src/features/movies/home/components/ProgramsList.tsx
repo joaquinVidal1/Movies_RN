@@ -22,9 +22,12 @@ const ProgramsList: React.FC<Props> = ({
         {title}
       </Text>
       <FlatList
-        contentContainerStyle={{
-          marginStart: style.marginStart,
-        }}
+        contentContainerStyle={[
+          {
+            marginStart: style.marginStart,
+          },
+          styles.contentContainer,
+        ]}
         horizontal
         data={programs}
         keyExtractor={(program, index) =>

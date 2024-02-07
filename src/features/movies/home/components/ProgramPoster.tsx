@@ -1,6 +1,6 @@
 import {Image} from 'expo-image';
 import {LinearGradient} from 'expo-linear-gradient';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import InfoIcon from '../../../../../res/InfoIcon.svg';
 import TitleLogo from '../../../../../res/MovyTitle.svg';
@@ -12,19 +12,11 @@ import {useAddMovieToWatchlist, useLatestMovie} from '../../../queries';
 const ProgramPoster: React.FC = () => {
   const {data: program} = useLatestMovie();
 
-  const getParams = useCallback(() => {
-    return {
-      mediaId: program?.id,
-    };
-  }, [program]);
-
-  const {mutate: addMovieToWatchList} = useAddMovieToWatchlist(getParams);
+  const {mutate: addMovieToWatchList} = useAddMovieToWatchlist();
 
   if (!program) {
-    return <View></View>;
+    return null;
   }
-
-  console.log('posterPath: ', program.posterPath);
 
   return (
     <View style={styles.container}>
@@ -66,7 +58,7 @@ const ProgramPoster: React.FC = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, {marginTop: 5}]}
-          onPress={() => addMovieToWatchList()}>
+          onPress={() => addMovieToWatchList(program?.id)}>
           <PlusIcon style={{alignSelf: 'center'}} />
           <Text style={[styles.buttonText, {marginTop: 23}]}>My List</Text>
         </TouchableOpacity>
