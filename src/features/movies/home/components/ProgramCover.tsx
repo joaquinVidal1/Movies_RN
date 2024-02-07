@@ -14,7 +14,7 @@ export type Props = {
 };
 
 const ProgramCover: React.FC<Props> = ({program}) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>();
   const {width} = useWindowDimensions();
   const imageWidth = (width - 33) / 4;
 
@@ -22,7 +22,7 @@ const ProgramCover: React.FC<Props> = ({program}) => {
 
   return (
     <View style={styles.container}>
-      {isLoading && <ActivityIndicator />}
+      {isLoading && <ActivityIndicator style={{marginStart: 30}} />}
       <Image
         source={{
           uri: program.posterPath,
@@ -40,6 +40,8 @@ const ProgramCover: React.FC<Props> = ({program}) => {
 const styles = StyleSheet.create({
   container: {
     marginEnd: 5,
+    alignContent: 'center',
+    flexDirection: 'row',
   },
 
   image: {

@@ -28,10 +28,6 @@ const ProgramsList: React.FC<Props> = ({
   const imageWidth = (width - 33) / 4;
   console.log('image width: ', imageWidth);
 
-  // if (!programs?.length) {
-  //   return null;
-  // }
-
   return (
     <View style={[styles.container, {...style, marginStart: 0}]}>
       <Text style={[styles.title, {marginStart: style.marginStart}]}>

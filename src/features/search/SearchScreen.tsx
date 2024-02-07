@@ -1,3 +1,4 @@
+import {useDebounce} from '@uidotdev/usehooks';
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {colors} from '../shared/color';
@@ -7,7 +8,8 @@ import {useSearchMovies} from './queries';
 
 const SearchScreen = () => {
   const [query, setQuery] = useState('');
-  const {data: movies, fetchNextPage} = useSearchMovies(query);
+  const debouncedQuery = useDebounce(query, 200);
+  const {data: movies, fetchNextPage} = useSearchMovies(debouncedQuery);
 
   return (
     <View>

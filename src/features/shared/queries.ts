@@ -17,11 +17,6 @@ export function baseInfiteQuery(
       if (nextPage > lastPage.total_pages) return undefined;
       else return nextPage;
     },
-    getPreviousPageParam: firstPage => {
-      const prevPage = firstPage.page - 1;
-      if (prevPage <= 0) return undefined;
-      else return prevPage;
-    },
     select: data => {
       return {
         ...data,
