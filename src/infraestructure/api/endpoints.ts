@@ -4,7 +4,6 @@ import Movie from '../../model/Movie';
 import {BASE_HIGH_QUALITY_IMAGE_URL, BASE_IMAGE_URL} from '../../model/Program';
 import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
-
 const ACCOUNT_ID = '20375605';
 
 const fetchProgramsFromApi = (
