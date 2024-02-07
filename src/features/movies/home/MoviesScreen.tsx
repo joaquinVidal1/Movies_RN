@@ -13,12 +13,12 @@ import ProgramsListContainer from './components/ProgramsListContainer';
 const MoviesScreen = () => {
   return (
     <View style={styles.container}>
-      <ScrollView bounces={false}>
+      <ScrollView bounces={false} contentContainerStyle={styles.scrollView}>
         <ProgramPoster />
         <InfiniteScrollingList
           useGetPrograms={useMyList}
           title="My List"
-          style={{...styles.list, marginTop: 43}}
+          style={{...styles.list, ...styles.firstList}}
         />
         <ProgramsListContainer
           useGetPrograms={useTrendingPrograms}
@@ -32,7 +32,7 @@ const MoviesScreen = () => {
         />
         <InfiniteScrollingList
           useGetPrograms={useTopRatedMovies}
-          style={{...styles.list, marginBottom: 60}}
+          style={styles.list}
           title={'Top Rated'}
         />
       </ScrollView>
@@ -47,6 +47,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  scrollView: {
+    paddingBottom: 60,
+  },
+  firstList: {
+    marginTop: 43,
   },
 });
 

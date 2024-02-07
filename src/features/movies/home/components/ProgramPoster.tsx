@@ -21,7 +21,6 @@ const ProgramPoster: React.FC = () => {
   const {mutate: addMovieToWatchList} = useAddMovieToWatchlist(getParams);
 
   if (!program) {
-    console.log('entro if');
     return <View></View>;
   }
 

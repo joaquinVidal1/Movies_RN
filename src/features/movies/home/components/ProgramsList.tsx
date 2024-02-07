@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleProp, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import Program from '../../../../model/Program';
 import {colors} from '../../../shared/color';
 import ProgramCover from './ProgramCover';
@@ -7,7 +7,7 @@ import ProgramCover from './ProgramCover';
 export type Props = {
   programs: Program[];
   title: string;
-  style: StyleProp<any>;
+  style: ViewStyle;
   onEndReached?: any;
 };
 const ProgramsList: React.FC<Props> = ({
@@ -24,7 +24,6 @@ const ProgramsList: React.FC<Props> = ({
       <FlatList
         contentContainerStyle={{
           marginStart: style.marginStart,
-          paddingEnd: 30,
         }}
         horizontal
         data={programs}
@@ -47,6 +46,9 @@ const styles = StyleSheet.create({
     color: colors.primaryColor,
     fontSize: 18,
     marginBottom: 24,
+  },
+  contentContainer: {
+    paddingEnd: 30,
   },
 });
 
