@@ -2,6 +2,7 @@ import {InfiniteQueryObserverResult} from '@tanstack/react-query';
 import React from 'react';
 import {ViewStyle} from 'react-native/types';
 import Program from '../../../../model/Program';
+import {Page} from './Page';
 import ProgramsList from './ProgramsList';
 
 export type Props = {
@@ -11,12 +12,7 @@ export type Props = {
     fetchNextPage: () => Promise<
       InfiniteQueryObserverResult<
         {
-          pages: {
-            results: Program[];
-            page: number;
-            total_pages: number;
-            total_results: number;
-          }[];
+          pages: Page<Program>[];
           pageParams: number[];
         },
         Error
