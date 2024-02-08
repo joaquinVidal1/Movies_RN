@@ -46,15 +46,16 @@ export const getMyList = async (
   page: number,
 ): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
   try {
-    const tvSeries: AxiosResponse<ApiPaginatedResponse<ApiProgram[]>> =
-      await instance.get(
+    const [tvSeries, movies]: AxiosResponse<
+      ApiPaginatedResponse<ApiProgram[]>
+    >[] = await Promise.all([
+      instance.get(
         `/account/${ACCOUNT_ID}/watchlist/tv?language=en-US&page=${page}&sort_by=created_at.asc`,
-      );
-
-    const movies: AxiosResponse<ApiPaginatedResponse<ApiProgram[]>> =
-      await instance.get(
+      ),
+      instance.get(
         `/account/${ACCOUNT_ID}/watchlist/movies?language=en-US&page=${page}&sort_by=created_at.asc`,
-      );
+      ),
+    ]);
 
     return {
       page: tvSeries.data.page,
