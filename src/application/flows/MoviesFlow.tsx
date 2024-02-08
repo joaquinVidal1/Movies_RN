@@ -10,7 +10,7 @@ type MoviesParamList = {
 
 const MoviesNavigator = createNativeStackNavigator<MoviesParamList>();
 
-const MoviesFlow = () => {
+const MoviesFlow: React.FC = () => {
   return (
     <MoviesNavigator.Navigator screenOptions={{headerShown: false}}>
       <MoviesNavigator.Screen name="MoviesHome" component={MoviesScreen} />

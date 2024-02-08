@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeIcon from '../../../res/Home';
 import MyListIcon from '../../../res/MyList';
 import ProfileIcon from '../../../res/Profile';
-import SearchIcon from '../../../res/Search';
+import SearchIcon from '../../../res/Search.svg';
 import {colors} from '../../features/shared/color';
 import ListFlow from './ListFlow';
 import MoviesFlow from './MoviesFlow';
@@ -18,7 +18,7 @@ type AppTabsParamList = {
 
 const AppNavigator = createBottomTabNavigator<AppTabsParamList>();
 
-const AppTabsFlow = () => {
+const AppTabsFlow: React.FC = () => {
   return (
     <AppNavigator.Navigator
       screenOptions={{
@@ -38,7 +38,15 @@ const AppTabsFlow = () => {
       <AppNavigator.Screen
         name="SearchFlow"
         component={SearchFlow}
-        options={{tabBarIcon: SearchIcon}}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <SearchIcon
+              color={
+                focused ? colors.tabBarActiveColor : colors.tabBarInactiveColor
+              }
+            />
+          ),
+        }}
       />
       <AppNavigator.Screen
         name="ListFlow"

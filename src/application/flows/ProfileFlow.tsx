@@ -8,7 +8,7 @@ type ProfileStackParamsList = {
 
 const ProfileNavigator = createNativeStackNavigator<ProfileStackParamsList>();
 
-const ListFlow = () => {
+const ListFlow: React.FC = () => {
   return (
     <ProfileNavigator.Navigator>
       <ProfileNavigator.Screen name="Profile" component={ProfileScreen} />
