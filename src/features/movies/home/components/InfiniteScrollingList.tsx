@@ -7,7 +7,7 @@ import ProgramsList from './ProgramsList';
 
 export type Props = {
   useGetPrograms: () => {
-    data: Program[];
+    data: Page<Program>[];
     isLoading: boolean;
     fetchNextPage: () => Promise<
       InfiniteQueryObserverResult<
@@ -31,7 +31,7 @@ const InfiniteScrollingList: React.FC<Props> = ({
   const {data, fetchNextPage} = useGetPrograms();
   return (
     <ProgramsList
-      programs={data}
+      programs={data.flatMap(page => page.results)}
       title={title}
       style={style}
       onEndReached={fetchNextPage}

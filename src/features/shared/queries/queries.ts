@@ -1,9 +1,30 @@
-import {useInfiniteQuery} from '@tanstack/react-query';
+import {
+  InfiniteQueryObserverResult,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import {
   ApiPaginatedResponse,
   ApiProgram,
 } from '../../../infraestructure/api/ApiProgram';
-import {fromApiToModel} from '../../../model/Program';
+import Program, {fromApiToModel} from '../../../model/Program';
+import {Page} from '../../movies/home/components/Page';
+
+type Props = (
+  queryKeys: string[],
+  queryFn: (page: number) => Promise<ApiPaginatedResponse<ApiProgram[]>>,
+) => {
+  data: Program[];
+  isLoading: boolean;
+  fetchNextPage: () => Promise<
+    InfiniteQueryObserverResult<
+      {
+        pages: Page<Program>[];
+        pageParams: number[];
+      },
+      Error
+    >
+  >;
+};
 
 export const baseInfiteQuery = (
   queryKeys: string[],
@@ -37,5 +58,9 @@ export const baseInfiteQuery = (
     },
     initialPageParam: 1,
   });
-  return {...res, data: res.data?.pages?.flatMap(page => page.results)};
+  return {
+    isLoading: res.isLoading,
+    fetchNextPage: () => res.fetchNextPage(),
+    data: res.data?.pages ?? [],
+  };
 };
