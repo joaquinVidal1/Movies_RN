@@ -3,10 +3,10 @@ import {ApiPaginatedResponse} from '../../infraestructure/api/ApiProgram';
 import {fromApiToModel} from '../../model/Program';
 import {ApiProgram} from './../../infraestructure/api/ApiProgram';
 
-export function baseInfiteQuery(
+export const baseInfiteQuery = (
   queryKeys: string[],
   queryFn: (page: number) => Promise<ApiPaginatedResponse<ApiProgram[]>>,
-) {
+) => {
   const res = useInfiniteQuery({
     queryKey: queryKeys,
     queryFn: ({pageParam}: {pageParam: number}) => {
@@ -16,6 +16,11 @@ export function baseInfiteQuery(
       const nextPage = lastPage.page + 1;
       if (nextPage > lastPage.total_pages) return undefined;
       else return nextPage;
+    },
+    getPreviousPageParam: firstPage => {
+      const prevPage = firstPage.page - 1;
+      if (prevPage <= 0) return undefined;
+      else return prevPage;
     },
     select: data => {
       return {
@@ -30,5 +35,9 @@ export function baseInfiteQuery(
     },
     initialPageParam: 1,
   });
-  return {...res, data: res.data?.pages?.flatMap(page => page.results)};
-}
+  return {
+    isLoading: res.isLoading,
+    fetchNextPage: () => res.fetchNextPage(),
+    data: res.data?.pages ?? [],
+  };
+};

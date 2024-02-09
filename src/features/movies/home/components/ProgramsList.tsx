@@ -26,7 +26,6 @@ const ProgramsList: React.FC<Props> = ({
 }) => {
   const {width} = useWindowDimensions();
   const imageWidth = (width - 33) / 4;
-  console.log('image width: ', imageWidth);
 
   return (
     <View style={[styles.container, {...style, marginStart: 0}]}>

@@ -20,9 +20,11 @@ const MoviesList: React.FC<Props> = ({movies, style, onEndReached}) => {
         }}
         data={movies}
         keyExtractor={(program, index) =>
-          program.id.toString() + index.toString()
+          program.id?.toString() + index.toString()
         }
-        renderItem={movie => <SearchMovie movie={movie.item} style={{}} />}
+        renderItem={movie => (
+          <SearchMovie movie={movie.item} style={undefined} />
+        )}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.7}
       />
