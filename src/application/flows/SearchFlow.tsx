@@ -10,7 +10,7 @@ const SearchNavigator = createNativeStackNavigator<SearchParamsList>();
 
 const MoviesFlow: React.FC = () => {
   return (
-    <SearchNavigator.Navigator>
+    <SearchNavigator.Navigator screenOptions={{headerShown: false}}>
       <SearchNavigator.Screen name="Search" component={SearchScreen} />
     </SearchNavigator.Navigator>
   );

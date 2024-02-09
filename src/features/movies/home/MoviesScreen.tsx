@@ -13,12 +13,12 @@ import {
 const MoviesScreen = () => {
   return (
     <View style={styles.container}>
-      <ScrollView bounces={false} contentContainerStyle={styles.scrollView}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <ProgramPoster />
         <InfiniteScrollingList
           useGetPrograms={useMyList}
           title="My List"
-          style={{...styles.list, ...styles.firstList}}
+          style={{...styles.list, marginTop: 43}}
         />
         <ProgramsListContainer
           useGetPrograms={useTrendingPrograms}
@@ -32,7 +32,7 @@ const MoviesScreen = () => {
         />
         <InfiniteScrollingList
           useGetPrograms={useTopRatedMovies}
-          style={styles.list}
+          style={{...styles.list, marginBottom: 60}}
           title={'Top Rated'}
         />
       </ScrollView>
@@ -48,12 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
-    paddingBottom: 60,
-  },
-  firstList: {
-    marginTop: 43,
-  },
+  scrollView: {},
 });
 
 export default MoviesScreen;

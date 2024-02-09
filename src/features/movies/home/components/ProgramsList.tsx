@@ -1,5 +1,13 @@
+import {FlashList} from '@shopify/flash-list';
 import React from 'react';
-import {FlatList, StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Program from '../../../../model/Program';
 import {colors} from '../../../shared/color';
 import ProgramCover from './ProgramCover';
@@ -8,7 +16,7 @@ export type Props = {
   programs: Program[];
   title: string;
   style: ViewStyle;
-  onEndReached?: any;
+  onEndReached?: () => void;
 };
 const ProgramsList: React.FC<Props> = ({
   programs,
@@ -16,27 +24,35 @@ const ProgramsList: React.FC<Props> = ({
   style,
   onEndReached,
 }) => {
+  const {width} = useWindowDimensions();
+  const imageWidth = (width - 33) / 4;
+
   return (
     <View style={[styles.container, {...style, marginStart: 0}]}>
       <Text style={[styles.title, {marginStart: style.marginStart}]}>
         {title}
       </Text>
-      <FlatList
-        contentContainerStyle={[
-          {
-            marginStart: style.marginStart,
-          },
-          styles.contentContainer,
-        ]}
-        horizontal
-        data={programs}
-        keyExtractor={(program, index) =>
-          program.id.toString() + index.toString()
-        }
-        renderItem={program => <ProgramCover program={program.item} />}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.7}
-      />
+      <View style={{height: 200}}>
+        <FlashList
+          horizontal
+          data={programs}
+          keyExtractor={(program, index) =>
+            program.id.toString() + index.toString()
+          }
+          renderItem={program => <ProgramCover program={program.item} />}
+          ListEmptyComponent={
+            // FIXME: look for a better solution
+            <View style={styles.loadersContainer}>
+              {[1, 2, 3, 4].map(numer => (
+                <ActivityIndicator style={{marginHorizontal: 30}} key={numer} />
+              ))}
+            </View>
+          }
+          estimatedItemSize={imageWidth}
+          onEndReached={onEndReached}
+          contentContainerStyle={styles.contentContainer}
+        />
+      </View>
     </View>
   );
 };
@@ -50,8 +66,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 24,
   },
+  loadersContainer: {
+    flexDirection: 'row',
+    width: '100%',
+  },
   contentContainer: {
-    paddingEnd: 30,
+    padding: 20,
   },
 });
 

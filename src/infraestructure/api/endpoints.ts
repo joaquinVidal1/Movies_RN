@@ -1,14 +1,14 @@
 import {AxiosResponse} from 'axios';
 import Genre from '../../model/Genre';
-import Movie from '../../model/Movie';
-import {BASE_HIGH_QUALITY_IMAGE_URL, BASE_IMAGE_URL} from '../../model/Program';
+import {MovieDetails} from '../../model/Movie';
+import {BASE_HIGH_QUALITY_IMAGE_URL} from './../../model/Program';
 import {ApiPaginatedResponse, ApiProgram} from './ApiProgram';
 import {instance} from './instance';
 const ACCOUNT_ID = '20375605';
 
-const fetchProgramsFromApi = (
+function fetchProgramsFromApi<T>(
   uri: string,
-): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
+): Promise<ApiPaginatedResponse<T[]>> {
   return instance
     .get(uri)
     .then(response => {
@@ -22,7 +22,7 @@ const fetchProgramsFromApi = (
       console.log(error);
       throw error;
     });
-};
+}
 
 export const getTrendingPrograms = (): Promise<
   ApiPaginatedResponse<ApiProgram[]>
@@ -30,10 +30,10 @@ export const getTrendingPrograms = (): Promise<
   return fetchProgramsFromApi('/trending/all/day');
 };
 
-export const getUpcomingMovies = (
-  page: number,
-): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
-  return fetchProgramsFromApi(`/movie/upcoming?language=en-US&page=${page}`);
+export const getUpcomingMovies = (page: number) => {
+  return fetchProgramsFromApi<ApiProgram>(
+    `/movie/upcoming?language=en-US&page=${page}`,
+  );
 };
 
 export const getTopRatedMovies = (
@@ -84,15 +84,18 @@ export const getGenres = async (): Promise<Genre[]> => {
   }
 };
 
-export const getLatestMovie = async (): Promise<Movie> => {
+export const getLatestMovie = async (): Promise<MovieDetails> => {
   try {
-    const movie = await instance.get('/movie/latest');
+    const topRatedMovies = await getTopRatedMovies(1);
+    const movieId = topRatedMovies.results[0].id;
+    const movieDetails: AxiosResponse<MovieDetails> = await instance.get(
+      `movie/${movieId}?language=en-US`,
+    );
     return {
-      ...movie.data,
-      backdropPath: BASE_IMAGE_URL + movie.data.backdrop_path,
-      posterPath: BASE_IMAGE_URL + movie.data.poster_path,
-      posterHighQualityPath:
-        BASE_HIGH_QUALITY_IMAGE_URL + movie.data.poster_path,
+      ...movieDetails.data,
+      backdrop_path:
+        BASE_HIGH_QUALITY_IMAGE_URL + movieDetails.data.backdrop_path,
+      poster_path: BASE_HIGH_QUALITY_IMAGE_URL + movieDetails.data.poster_path,
     };
   } catch (e) {
     return Promise.reject(e);
@@ -110,4 +113,13 @@ export const addMovieToWatchlist = async (id: number) => {
   } catch (e) {
     return Promise.reject(e);
   }
+};
+
+export const searchMovies = async (
+  query: string,
+  page: number,
+): Promise<ApiPaginatedResponse<ApiProgram[]>> => {
+  return fetchProgramsFromApi(
+    `/search/movie?query=${query}&include_adult=true&language=en-US&page=${page}`,
+  );
 };

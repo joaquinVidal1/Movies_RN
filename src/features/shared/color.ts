@@ -5,4 +5,5 @@ export const colors = {
   tabBarBackground: '#171717',
   tabBarActiveColor: '#0578FF',
   tabBarInactiveColor: '#FFFFFF',
+  headerBackgroundColor: '#171717',
 };
