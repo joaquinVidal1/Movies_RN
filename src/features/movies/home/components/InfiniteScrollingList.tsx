@@ -2,21 +2,17 @@ import {InfiniteQueryObserverResult} from '@tanstack/react-query';
 import React from 'react';
 import {ViewStyle} from 'react-native/types';
 import Program from '../../../../model/Program';
+import {Page} from './Page';
 import ProgramsList from './ProgramsList';
 
 export type Props = {
   useGetPrograms: () => {
-    data: Program[];
+    data: Page<Program>[];
     isLoading: boolean;
     fetchNextPage: () => Promise<
       InfiniteQueryObserverResult<
         {
-          pages: {
-            results: Program[];
-            page: number;
-            total_pages: number;
-            total_results: number;
-          }[];
+          pages: Page<Program>[];
           pageParams: number[];
         },
         Error
@@ -35,7 +31,7 @@ const InfiniteScrollingList: React.FC<Props> = ({
   const {data, fetchNextPage} = useGetPrograms();
   return (
     <ProgramsList
-      programs={data}
+      programs={data.flatMap(page => page.results)}
       title={title}
       style={style}
       onEndReached={fetchNextPage}

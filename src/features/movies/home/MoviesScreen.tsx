@@ -8,7 +8,7 @@ import {
   useTopRatedMovies,
   useTrendingPrograms,
   useUpcomingMovies,
-} from './queries';
+} from './queries/queries';
 
 const MoviesScreen = () => {
   return (

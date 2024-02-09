@@ -7,33 +7,17 @@ import {
   getTopRatedMovies,
   getTrendingPrograms,
   getUpcomingMovies,
-} from '../../../infraestructure/api/endpoints';
-import {fromApiToModel} from '../../../model/Program';
-import {baseInfiteQuery} from './../../shared/queries';
-
-const programsKeys = {
-  all: ['programs'],
-};
-
-const myListKeys = {
-  all: ['myList'],
-};
-
-const upcomingKeys = {
-  all: ['upComing'],
-};
-
-const topRatedKeys = {
-  all: ['topRated'],
-};
-
-const genresKeys = {
-  all: ['genres'],
-};
-
-const latestMovieKeys = {
-  all: ['Latest', 'Movie'],
-};
+} from '../../../../infraestructure/api/endpoints';
+import {fromApiToModel} from '../../../../model/Program';
+import {baseInfiteQuery} from '../../../shared/queries/queries';
+import {
+  genresKeys,
+  latestMovieKeys,
+  myListKeys,
+  programsKeys,
+  topRatedKeys,
+  upcomingKeys,
+} from './keys';
 
 export const useUpcomingMovies = () => {
   return baseInfiteQuery(upcomingKeys.all, getUpcomingMovies);
@@ -69,17 +53,11 @@ export const useLatestMovie = () => {
   });
 };
 
-export const useAddMovieToWatchlist = (
-  getParams: () => {
-    mediaId: number;
-  },
-) => {
+export const useAddMovieToWatchlist = () => {
   const queryClient = useQueryClient();
 
-  const {mediaId} = getParams();
-
   return useMutation({
-    mutationFn: () => addMovieToWatchlist(mediaId),
+    mutationFn: (mediaId: number) => addMovieToWatchlist(mediaId),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: myListKeys.all});
     },
